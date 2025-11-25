@@ -1,0 +1,46 @@
+// Prisma schema for MySQL
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Goal {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  title       String
+  description String?
+  roadmap     Roadmap?
+}
+
+model Roadmap {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  goalId     String   @unique
+  goal       Goal     @relation(fields: [goalId], references: [id])
+  modules    Module[]
+}
+
+model Module {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  order       Int
+  roadmapId   String
+  roadmap     Roadmap  @relation(fields: [roadmapId], references: [id])
+  lessons     Lesson[]
+}
+
+model Lesson {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  order     Int
+  moduleId  String
+  module    Module   @relation(fields: [moduleId], references: [id])
+}

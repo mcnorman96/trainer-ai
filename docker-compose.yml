@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  trainer-ai:
+    container_name: trainer-ai
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - trainer-ai-mysql
+
+  trainer-ai-mysql:
+    image: mysql:8.0
+    container_name: trainer-ai-mysql
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
