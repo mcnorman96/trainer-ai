@@ -34,7 +34,9 @@ model Module {
   roadmapId   String
   roadmap     Roadmap  @relation(fields: [roadmapId], references: [id])
   lessons     Lesson[]
+  completed   Boolean  @default(false)
 }
+
 
 model Lesson {
   id        String   @id @default(cuid())
@@ -43,4 +45,13 @@ model Lesson {
   order     Int
   moduleId  String
   module    Module   @relation(fields: [moduleId], references: [id])
+  quiz      Quiz?
+  completed Boolean  @default(false)
+}
+
+model Quiz {
+  id        String   @id @default(cuid())
+  lessonId  String   @unique
+  lesson    Lesson   @relation(fields: [lessonId], references: [id])
+  questions Json
 }

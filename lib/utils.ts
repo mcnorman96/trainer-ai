@@ -1,8 +1,3 @@
-// Utility functions
-export function exampleUtil() {
-  // Implement utility logic here
-}
-
 export const generate = async (openai: any, prompt: string, maxTokens = 500) => {
   const res = await openai.chat.completions.create({
     model: "gpt-4o-mini", // cheap + strong

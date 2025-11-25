@@ -14,23 +14,24 @@ export default function GoalInput() {
     setError("");
     setSuccess("");
     const title = goalInputRef.current?.value;
+
     if (title) {
       try {
         const data = await apiFetch("/api/goals", {
           method: "POST",
           body: { title },
         });
-        console.log('data', data);
         
         if (data.success) {
           setSuccess("Goal created!");
-          setCreatedGoal(data.goal.title);
+          setCreatedGoal(data.fullLearningPath.goal.title);
           if (goalInputRef.current) {
             goalInputRef.current.value = "";
           }
         } else {
           setError(data.error || "Failed to create goal");
         }
+
       } catch (err) {
         setError("Network error");
         console.log('err', err);

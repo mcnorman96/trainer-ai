@@ -91,7 +91,7 @@ export async function generateQuiz(topic: string) {
   };
 
   const prompt = quizPrompt.replace("{{topic}}", topic);
-  return generate(openai,prompt, 300);
+  return generate(openai, prompt, 300);
 }
 
 export async function generateExplanation(concept: string) {
@@ -103,9 +103,7 @@ export async function generateExplanation(concept: string) {
 }
 
 export async function generateFullLearningPath(goalTitle: string) {
-  // Generate goal description
   const goal = await generateGoalDescription(goalTitle);
-  // Create goal in DB
   const dbGoal = await prisma.goal.create({
     data: {
       title: goal.title,
@@ -113,9 +111,7 @@ export async function generateFullLearningPath(goalTitle: string) {
     },
   });
 
-  // Generate roadmap
   const roadmap = await generateRoadmap(goalTitle);
-  // Create roadmap in DB
   const dbRoadmap = await prisma.roadmap.create({
     data: {
       goalId: dbGoal.id,
@@ -123,12 +119,12 @@ export async function generateFullLearningPath(goalTitle: string) {
   });
 
   const dbModules: Array<Module & { lessons: Array<Lesson & { quiz: any; explanation: any }> }> = [];
+  
   for (const moduleItem of roadmap.modules) {
-    // Generate module
     const generated = await generateModule(
       JSON.stringify({ title: moduleItem.title, description: moduleItem.description })
     );
-    // Create module in DB
+
     const dbModule: Module = await prisma.module.create({
       data: {
         title: generated.title,
@@ -140,10 +136,9 @@ export async function generateFullLearningPath(goalTitle: string) {
 
     const dbLessons: Array<Lesson & { quiz: any; explanation: any }> = [];
     for (const lesson of generated.lessons) {
-      // Generate quiz and explanation
       const quiz = await generateQuiz(lesson.title);
       const explanation = await generateExplanation(lesson.title);
-      // Create lesson in DB
+
       const dbLesson: Lesson = await prisma.lesson.create({
         data: {
           title: lesson.title,
@@ -152,10 +147,17 @@ export async function generateFullLearningPath(goalTitle: string) {
           moduleId: dbModule.id,
         },
       });
-      // Optionally, store quiz and explanation in lesson or related tables if schema supports
+
+      const dbQuiz = await prisma.quiz.create({
+        data: {
+          lessonId: dbLesson.id,
+          questions: quiz.questions,
+        },
+      });
+
       dbLessons.push({
         ...dbLesson,
-        quiz,
+        quiz: dbQuiz,
         explanation,
       });
     }
