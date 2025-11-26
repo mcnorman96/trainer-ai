@@ -24,7 +24,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ quiz, onClose, lessonId, moduleId, 
     let correct = 0;
 
     quiz.questions.forEach((quizQuestion, id) => {
-      if (selected[id] === quizQuestion.correctAnswer) correct++;
+      if (selected[id] === quizQuestion.answer) correct++;
     });
 
     const percent = (correct / quiz.questions.length) * 100;

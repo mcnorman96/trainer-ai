@@ -44,7 +44,7 @@ export type QuizType = {
   questions: Array<{
     question: string;
     options: string[];
-    correctAnswer: string;
+    answer: string;
   }>;
 };
 

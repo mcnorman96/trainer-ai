@@ -24,6 +24,8 @@ export async function apiFetch<T = any>(url: string, options?: {
 
   const res = await fetch(fetchUrl, fetchOptions);
 
+  console.log(res);
+  
   if (!res.ok) {
     throw new Error(`API error: ${res.status}`);
   }
