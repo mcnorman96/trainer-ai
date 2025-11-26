@@ -1,15 +1,16 @@
 # Welcome to Trainer AI
 
-Trainer AI is your personal learning assistant. It helps you set goals, get custom learning paths, and actually enjoy the process. No jargon, no clutter—just smart, simple tools to help you learn.
+This project helps you learn a new topic with the power of AI! Set a goal and begin diving into the topic. It gives you multiple modules with lessons to help you teach about the topic. You will need to complete quizzes in the process to make sure that you understand it well.
 
 ---
 
-## What’s This All About?
+## What it consists of?
 Trainer AI uses AI to generate:
 - Personalized learning roadmaps
 - Modules and lessons
 - Quizzes and explanations
-All tailored to your goals. You set the destination, Trainer AI builds the journey.
+
+All tailored to your goals. You set the destination and the AI builds the journey.
 
 ---
 
