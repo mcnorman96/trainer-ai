@@ -25,3 +25,4 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     </ModalContext.Provider>
   );
 };
+// ...existing code...

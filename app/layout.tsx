@@ -26,15 +26,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex min-h-screen flex-wrap
-         bg-background text-foreground`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-linear-to-br from-gray-900 via-gray-800 to-gray-700 text-white`}
       >
-        <nav className="p-4 flex flex-col gap-4 w-[20%]">
-          <h3 className="text-2xl font-bold mb-8">Trainer AI</h3>
-          <Link href="/">New Goal</Link>
-          <Link href="/dashboard">Dashboard</Link>
-        </nav>
-        <main className="w-[80%]">{children}</main>
+        <div className="flex min-h-screen">
+          <aside className="w-72 bg-gray-950 border-r border-gray-800 flex flex-col items-center py-8 px-6 shadow-lg">
+            <div className="flex items-center gap-2 mb-10">
+              <span className="text-blue-600 text-3xl font-extrabold">Trainer AI</span>
+            </div>
+            <nav className="flex flex-col gap-4 w-full">
+              <Link href="/" className="px-4 py-2 rounded-lg hover:bg-gray-800 transition font-medium">New Goal</Link>
+              <Link href="/dashboard" className="px-4 py-2 rounded-lg hover:bg-gray-800 transition font-medium">Dashboard</Link>
+            </nav>
+          </aside>
+          <main className="flex-1 px-10 py-8 overflow-y-auto">
+            {children}
+          </main>
+        </div>
       </body>
     </html>
   );

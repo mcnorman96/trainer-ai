@@ -24,17 +24,19 @@ const GoalDetails = ({ goalId }: { goalId: string }) => {
   }, [goalId]);
 
   return (
-    <>
-      <h2>Learning path for goal</h2>
-      {error && <div className="text-red-500">{error}</div>}
+    <div className="w-full bg-gray-900 rounded-xl shadow-lg p-6 mt-10 border border-gray-800">
+      <h2 className="text-2xl font-bold mb-6 text-white">Learning Path for Goal</h2>
+      {error && <div className="text-red-400 font-medium mb-4">{error}</div>}
       {modules.length > 0 ? (
-        modules.map((module) => (
+        <div className="space-y-6">
+          {modules.map((module) => (
             <SingleModule key={module.id} goalId={goalId} module={module} />
-          ))
+          ))}
+        </div>
       ) : (
-        <div>No modules available for this goal.</div>
+        <div className="text-gray-400">No modules available for this goal.</div>
       )}
-    </>
+    </div>
   );
 };
 

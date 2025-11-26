@@ -34,15 +34,14 @@ const QuizForm: React.FC<QuizFormProps> = ({ quiz, onClose, lessonId, moduleId, 
     if (percent >= 75) {
       await markLessonComplete(lessonId);
       await checkAndMarkModuleComplete(moduleId);
-      if (onSuccess) onSuccess();
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="space-y-6">
       {quiz.questions.map((quizQuestion, id) => (
-        <div key={id} className="mb-4">
-          <p className="font-semibold mb-2">{quizQuestion.question}</p>
+        <div key={id} className="mb-4 p-4 bg-gray-800 rounded-lg border border-gray-700">
+          <p className="font-semibold mb-2 text-white">{quizQuestion.question}</p>
           <div className="flex flex-col gap-2">
             {quizQuestion.options.map((opt, i) => (
               <label key={i} className="flex items-center gap-2 cursor-pointer">
@@ -51,20 +50,30 @@ const QuizForm: React.FC<QuizFormProps> = ({ quiz, onClose, lessonId, moduleId, 
                   checked={selected[id] === opt}
                   onChange={() => handleChange(id, opt)}
                   disabled={submitted}
-                  className="form-checkbox h-5 w-5 text-blue-600"
+                  className="form-checkbox h-5 w-5 text-blue-500 focus:ring-2 focus:ring-blue-400"
                 />
-                <span>{opt}</span>
+                <span className="text-gray-200">{opt}</span>
               </label>
             ))}
           </div>
         </div>
       ))}
       {!submitted ? (
-        <button type="submit" className="mt-4 px-4 py-2 bg-green-600 text-white rounded">Submit</button>
+        <button type="submit" className="w-full mt-4 mb-2 px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold shadow hover:bg-blue-700 transition">Submit</button>
       ) : (
-        <div className="mt-4 text-lg font-bold text-white">Score: {score}</div>
+          <>
+            <div className="mt-4 mb-2 text-lg font-bold text-blue-400">Score: {score}</div>
+            {score && parseFloat(score) >= 75 ? (
+              <div className="text-green-400 font-semibold">Congratulations! You passed the quiz.</div>
+              
+            ) : (
+              <div className="text-red-400 font-semibold">You did not pass. Please try again.</div>
+            )}
+            {onSuccess && <button type="button" onClick={onSuccess} className="w-full mt-2 mb-2 px-6 py-2 bg-green-600 text-white rounded-lg font-semibold shadow hover:bg-green-700 transition">Proceed</button>}
+          </>
+
       )}
-      <button type="button" onClick={onClose} className="mt-4 ml-2 px-4 py-2 bg-white text-gray-800 rounded">Close</button>
+      <button type="button" onClick={onClose} className="w-full mt-2 px-6 py-2 bg-gray-700 text-white rounded-lg font-semibold shadow hover:bg-gray-600 transition">Close</button>
     </form>
   );
 };

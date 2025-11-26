@@ -21,16 +21,12 @@ const ListOfGoals = () => {
   }, [setGoals]);
 
   return (
-    <div className='goals'>
-      <h2 className='text-2xl font-bold mb-4'>List Of Goals</h2>
-      <div className='flex flex-col'>
-      {
-        goals && goals.map((goal) => (
-          <div key={goal.id}>
-            <SingleGoal goal={goal} setGoals={setGoals} />
-          </div>
-        ))
-      }
+    <div className="w-full bg-gray-800 rounded-lg shadow p-6 border border-gray-700 mt-6">
+      <h3 className="mb-6 text-white">List Of Goals</h3>
+      <div className="space-y-6">
+        {goals && goals.map((goal) => (
+          <SingleGoal key={goal.id} goal={goal} setGoals={setGoals} />
+        ))}
       </div>
     </div>
   )

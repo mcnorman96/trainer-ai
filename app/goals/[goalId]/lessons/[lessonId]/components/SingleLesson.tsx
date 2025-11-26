@@ -24,14 +24,14 @@ const SingleLessonContent = ({ goalId, lessonId }: { goalId: string; lessonId: s
   }, [lessonId]);
 
   return (
-    <>
-      <h2>Lesson Details</h2>
+    <div className="w-full bg-gray-900 rounded-xl shadow-lg p-6 mt-10 border border-gray-800">
+      <h2 className="text-2xl font-bold mb-6 text-white">Lesson Details</h2>
       {lesson ? (
         <div>
-          <h3>{lesson.title}</h3>
-          <p>{lesson.content}</p>
+          <h3 className="text-xl font-semibold text-blue-300 mb-2">{lesson.title}</h3>
+          <p className="text-gray-300 mb-6">{lesson.content}</p>
           <button
-            className="mt-6 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+            className="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold shadow hover:bg-blue-700 transition"
             onClick={openModal}
           >
             Take Quiz
@@ -39,9 +39,9 @@ const SingleLessonContent = ({ goalId, lessonId }: { goalId: string; lessonId: s
           <QuizModal lessonId={lesson.id} moduleId={lesson.moduleId} goalId={goalId} />
         </div>
       ) : (
-        <p>Loading lesson...</p>
+        <p className="text-gray-400">Loading lesson...</p>
       )}
-    </>
+    </div>
   );
 };
 

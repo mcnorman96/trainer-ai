@@ -6,13 +6,11 @@ export default function GoalInput() {
   const goalInputRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
-  const [success, setSuccess] = useState<string>("");
   const [createdGoal, setCreatedGoal] = useState<string | null>(null);
 
   const createGoal = async () => {
     setLoading(true);
     setError("");
-    setSuccess("");
 
     const title = goalInputRef.current?.value;
     if (!title) {
@@ -23,7 +21,6 @@ export default function GoalInput() {
 
     try {
       const data = await createNewGoal(title);
-      setSuccess("Goal created!");
       setCreatedGoal(data.goal.title);
       if (goalInputRef.current) {
         goalInputRef.current.value = "";
@@ -37,14 +34,25 @@ export default function GoalInput() {
   };
 
   return (
-    <>
-      <input className="border p-2 rounded w-1/2 mb-4" ref={goalInputRef} type="text" placeholder="Enter your training goal" />
-      <button className="bg-green-500 text-white px-4 py-2 rounded" onClick={createGoal} disabled={loading}>
-        {loading ? "Creating..." : "Create Goal"}
-      </button>
-      {success && <p className="text-green-600">{success}</p>}
-      {error && <p className="text-red-600">{error}</p>}
-      {createdGoal && <p>Last created goal: {createdGoal}</p>}
-    </>
+    <div className="max-w-xl mx-auto bg-gray-900 rounded-xl shadow-lg p-8 mt-5 border border-gray-800">
+      <h2 className="text-2xl font-bold mb-6 text-white">Create a New Training Goal</h2>
+      <div className="flex gap-4 mb-6">
+        <input
+          className="flex-1 px-4 py-2 rounded-lg border border-gray-700 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
+          ref={goalInputRef}
+          type="text"
+          placeholder="Enter your training goal"
+        />
+        <button
+          className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold shadow hover:bg-blue-700 transition disabled:opacity-50"
+          onClick={createGoal}
+          disabled={loading}
+        >
+          {loading ? "Creating..." : "Create Goal"}
+        </button>
+      </div>
+      {error && <p className="text-red-400 font-medium mb-2">{error}</p>}
+      {createdGoal && <p className="text-gray-300 mt-4">Goal created: <span className="font-semibold">{createdGoal}</span></p>}
+    </div>
   );
 }
