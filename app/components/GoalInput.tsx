@@ -24,7 +24,7 @@ export default function GoalInput() {
     try {
       const data = await createNewGoal(title);
       setSuccess("Goal created!");
-      setCreatedGoal(data.fullLearningPath.goal.title);
+      setCreatedGoal(data.goal.title);
       if (goalInputRef.current) {
         goalInputRef.current.value = "";
       }

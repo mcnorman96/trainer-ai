@@ -1,6 +1,6 @@
 export const generate = async (openai: any, prompt: string, maxTokens = 500) => {
   const res = await openai.chat.completions.create({
-    model: "gpt-4o-mini", // cheap + strong
+    model: "gpt-4o-mini",
     messages: [{ role: "user", content: prompt }],
     max_tokens: maxTokens,
     response_format: { type: "json_object" },

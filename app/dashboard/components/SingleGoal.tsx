@@ -1,13 +1,10 @@
+import { GoalType } from '@/lib/types'
 import Link from 'next/link'
 import React from 'react'
 
 type SingleGoalProps = {
-  goal: {
-    id: string,
-    title: string,
-    description: string
-  },
-  setGoals: React.Dispatch<React.SetStateAction<Array<{id: string, title: string, description: string}>>>
+  goal: GoalType,
+  setGoals: React.Dispatch<React.SetStateAction<Array<GoalType>>>
 }
 
 const SingleGoal = ({ goal, setGoals }: SingleGoalProps) => {

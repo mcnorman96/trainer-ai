@@ -17,5 +17,6 @@ export async function GET(request: NextRequest) {
     where: { roadmapId: roadmap.id },
     include: { lessons: true },
   });
+  
   return NextResponse.json({ success: true, data: { modules }, error: null });
 }

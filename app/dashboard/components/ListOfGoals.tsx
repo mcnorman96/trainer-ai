@@ -1,11 +1,12 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import SingleGoal from './SingleGoal';
 import { getListOfGoals } from '../actions';
+import { GoalType } from '@/lib/types';
 
 const ListOfGoals = () => {
-  const [goals, setGoals] = useState<Array<{id: string, title: string, description: string}>>([])
+  const [goals, setGoals] = useState<Array<GoalType>>([])
   
   useEffect(() => {
     const fetchGoals = async () => {
@@ -17,7 +18,7 @@ const ListOfGoals = () => {
       }
     };
     fetchGoals();
-  }, []);
+  }, [setGoals]);
 
   return (
     <div className='goals'>
