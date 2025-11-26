@@ -34,7 +34,7 @@ const QuizModal = ({ lessonId, moduleId, goalId }: { lessonId: string; moduleId:
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
-      <div className="bg-gray-900 rounded-xl shadow-2xl p-8 w-full max-w-md border border-gray-800">
+      <div className="bg-gray-900 rounded-xl shadow-2xl p-8 w-full max-w-md border border-gray-800 overflow-y-auto max-h-screen">
         <h3 className="text-2xl font-bold mb-6 text-white">Quiz</h3>
         {quiz ? (
           <QuizForm quiz={quiz} onClose={closeModal} lessonId={lessonId} moduleId={moduleId} onSuccess={handleSuccess} />

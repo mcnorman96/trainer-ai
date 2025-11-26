@@ -13,7 +13,7 @@ model Goal {
   id          String   @id @default(cuid())
   createdAt   DateTime @default(now())
   title       String
-  description String?
+  description String? @db.Text
   roadmap     Roadmap?
 }
 
@@ -29,7 +29,7 @@ model Roadmap {
 model Module {
   id          String   @id @default(cuid())
   title       String
-  description String?
+  description String? @db.Text
   order       Int
   roadmapId   String
   roadmap     Roadmap  @relation(fields: [roadmapId], references: [id])
@@ -37,16 +37,16 @@ model Module {
   completed   Boolean  @default(false)
 }
 
-
 model Lesson {
-  id        String   @id @default(cuid())
-  title     String
-  content   String
-  order     Int
-  moduleId  String
-  module    Module   @relation(fields: [moduleId], references: [id])
-  quiz      Quiz?
-  completed Boolean  @default(false)
+  id           String   @id @default(cuid())
+  title        String
+  shortContent String? @db.VarChar(1024)
+  content      String? @db.Text
+  order        Int
+  moduleId     String
+  module       Module   @relation(fields: [moduleId], references: [id])
+  quiz         Quiz?
+  completed    Boolean  @default(false)
 }
 
 model Quiz {

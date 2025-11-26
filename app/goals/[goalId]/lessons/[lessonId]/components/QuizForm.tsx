@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { QuizType } from '@/lib/types';
 import { checkAndMarkModuleComplete, markLessonComplete } from '../actions';
 
@@ -41,7 +42,9 @@ const QuizForm: React.FC<QuizFormProps> = ({ quiz, onClose, lessonId, moduleId, 
     <form onSubmit={handleSubmit} className="space-y-6">
       {quiz.questions.map((quizQuestion, id) => (
         <div key={id} className="mb-4 p-4 bg-gray-800 rounded-lg border border-gray-700">
-          <p className="font-semibold mb-2 text-white">{quizQuestion.question}</p>
+          <div className="font-semibold mb-2 text-white">
+            <ReactMarkdown>{quizQuestion.question}</ReactMarkdown>
+          </div>
           <div className="flex flex-col gap-2">
             {quizQuestion.options.map((opt, i) => (
               <label key={i} className="flex items-center gap-2 cursor-pointer">

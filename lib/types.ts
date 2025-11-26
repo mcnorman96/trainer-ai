@@ -29,6 +29,7 @@ export type ModuleType = {
 export type LessonType = {
   id: string;
   title: string;
+  shortContent: string;
   content: string;
   order: number;
   moduleId: string;

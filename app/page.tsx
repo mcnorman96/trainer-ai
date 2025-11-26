@@ -6,6 +6,7 @@ export default function Home() {
       <h1>Welcome to Trainer AI</h1>
       <p className="text-lg mb-8">Start learning by entering a topic below.</p>
       <p className="text-lg mb-8">Example: Learn React</p>
+      <p className="text-lg mb-8">It takes a while for the AI to generate your learning path. Please be patient.</p>
       <GoalInput />
     </div>
   );

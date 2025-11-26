@@ -6,96 +6,55 @@ import { explainPrompt } from "./prompts/explainPrompt";
 import { generate } from "../utils";
 import { prisma } from "../db";
 import type { Module, Lesson } from "@prisma/client";
+import { QuizType } from "../types";
+import goalDescription from "./test-data/goalDescription.json";
+import roadmap from "./test-data/roadmap.json";
+import moduleData from "./test-data/module.json";
+import quiz from "./test-data/quiz.json";
+import explanation from "./test-data/explanation.json";
+import { goalPrompt } from "./prompts/goalPrompt";
+
+const useTestData = process.env.USE_TEST_DATA === "true";
+const testData = {
+  goalDescription,
+  roadmap,
+  module: moduleData,
+  quiz,
+  explanation,
+};
+
+export const getTestData = (type: keyof typeof testData) => {
+  return testData[type];
+}
 
 export async function generateGoalDescription(title: string) {
-  return {
-    title,
-    description: `This is a detailed mock description for the goal "${title}". It explains what the user will achieve, why it matters, and what outcomes to expect.`,
-  };
-  
-  const prompt = `
-  You are generating a detailed educational goal description.
-  Return only JSON.
-
-  {
-    "title": "${title}",
-    "description": "A detailed, motivating explanation of the goal"
-  }
-  `;
-
-  return generate(openai, prompt, 300);
+  if (useTestData) return getTestData('goalDescription');
+  const promptGoal = goalPrompt.replace("{{title}}", title);
+  return generate(openai, promptGoal, 300);
 }
 
 export async function generateRoadmap(goalTitle: string) {
-  return {
-    modules: [
-      {
-        title: "Module 1: Foundations",
-        description: "Mock description for module 1",
-      },
-      {
-        title: "Module 2: Core Concepts",
-        description: "Mock description for module 2",
-      },
-      {
-        title: "Module 3: Advanced Skills",
-        description: "Mock description for module 3",
-      },
-    ],
-  };
-
-  const prompt = roadmapPrompt.replace("{{goal}}", goalTitle);
-  return generate(openai,prompt, 800);
+  if (useTestData) return getTestData('roadmap');
+  const promptRoadmap = roadmapPrompt.replace("{{goal}}", goalTitle);
+  return generate(openai, promptRoadmap, 800);
 }
 
 export async function generateModule(moduleInfo: string) {
-  const parsed = JSON.parse(moduleInfo);
-
-  return {
-    title: parsed.title,
-    description: parsed.description,
-    lessons: [
-      {
-        title: `${parsed.title} - Lesson 1`,
-        content: "This is mock lesson content (1)",
-      },
-      {
-        title: `${parsed.title} - Lesson 2`,
-        content: "This is mock lesson content (2)",
-      },
-    ],
-  };
-
-  const prompt = modulePrompt.replace("{{moduleInfo}}", moduleInfo);
-  return generate(openai,prompt, 600);
+  if (useTestData) return getTestData('module');
+  const promptModule = modulePrompt.replace("{{moduleInfo}}", moduleInfo);
+  return generate(openai, promptModule, 600);
 }
 
 export async function generateQuiz(topic: string) {
-  return {
-    questions: [
-      {
-        question: `What is the definition of ${topic}?`,
-        options: ["Option A", "Option B", "Option C", "Option D"],
-        answer: "Option A",
-      },
-      {
-        question: `Why is ${topic} important?`,
-        options: ["Reason 1", "Reason 2", "Reason 3", "Reason 4"],
-        answer: "Reason 2",
-      },
-    ],
-  };
-
-  const prompt = quizPrompt.replace("{{topic}}", topic);
-  return generate(openai, prompt, 300);
+  if (useTestData) return getTestData('quiz');
+  const promptQuiz = quizPrompt.replace("{{topic}}", topic);
+  return generate(openai, promptQuiz, 500);
 }
 
 export async function generateExplanation(concept: string) {
-  return {
-    explanation: `This is a mock explanation for the concept: ${concept}. It breaks down the idea into simple steps.`,
-  };
-  const prompt = explainPrompt.replace("{{concept}}", concept);
-  return generate(openai,prompt, 300);
+  if (useTestData) return getTestData('explanation');
+  const promptExplanation = explainPrompt.replace("{{concept}}", concept);
+  return generate(openai, promptExplanation, 1500);
 }
 
 export async function generateFullLearningPath(goalTitle: string) {
@@ -114,7 +73,7 @@ export async function generateFullLearningPath(goalTitle: string) {
     },
   });
 
-  const dbModules: Array<Module & { lessons: Array<Lesson & { quiz: any; explanation: any }> }> = [];
+  const dbModules: Array<Module & { lessons: Array<Lesson & { quiz: QuizType; explanation: string }> }> = [];
   
   for (const moduleItem of roadmap.modules) {
     const generated = await generateModule(
@@ -130,7 +89,7 @@ export async function generateFullLearningPath(goalTitle: string) {
       },
     });
 
-    const dbLessons: Array<Lesson & { quiz: any; explanation: any }> = [];
+    const dbLessons: Array<Lesson & { quiz: QuizType; explanation: string }> = [];
     for (const lesson of generated.lessons) {
       const quiz = await generateQuiz(lesson.title);
       const explanation = await generateExplanation(lesson.title);
@@ -138,7 +97,8 @@ export async function generateFullLearningPath(goalTitle: string) {
       const dbLesson: Lesson = await prisma.lesson.create({
         data: {
           title: lesson.title,
-          content: lesson.content,
+          shortContent: lesson.content, 
+          content: explanation.explanation,
           order: dbLessons.length + 1,
           moduleId: dbModule.id,
         },

@@ -10,9 +10,9 @@ const ListOfGoals = async () => {
     <div className="w-full bg-gray-800 rounded-lg shadow p-6 border border-gray-700 mt-6">
       <h3 className="mb-6 text-white">List Of Goals</h3>
       <div className="space-y-6">
-        {goals && goals.map((goal) => (
+        {goals && goals.length > 0 ? goals.map((goal) => (
           <SingleGoal key={goal.id} goal={goal} />
-        ))}
+        )) : <p className="text-gray-400">No goals yet.</p>}
       </div>
     </div>
   );

@@ -65,7 +65,7 @@ const SingleModule = ({ goalId, module }: { goalId: string; module: ModuleType }
                         {lessonCompleted[lesson.id] && <span className="ml-2 px-2 py-1 text-xs bg-green-400 text-white rounded">Completed</span>}
                       </Link>
                     </h4>
-                    <p className="text-gray-400">{lesson.content}</p>
+                    <p className="text-gray-400">{lesson.shortContent}</p>
                   </div>
                 </div>
               ))}

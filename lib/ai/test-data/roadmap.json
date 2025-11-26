@@ -1,0 +1,6 @@
+{
+  "modules": [
+    { "title": "Module 1: Foundations", "description": "Test module 1 description." },
+    { "title": "Module 2: Core Concepts", "description": "Test module 2 description." }
+  ]
+}

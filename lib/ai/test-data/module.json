@@ -1,0 +1,8 @@
+{
+  "title": "Test Module",
+  "description": "This is a test module description.",
+  "lessons": [
+    { "title": "Lesson 1", "content": "Test lesson 1 content." },
+    { "title": "Lesson 2", "content": "Test lesson 2 content." }
+  ]
+}

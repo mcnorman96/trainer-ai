@@ -5,6 +5,7 @@ import { ModalProvider, useModal } from '@/app/components/ModalContext';
 import QuizModal from './QuizModal';
 import { LessonType } from '@/lib/types';
 import { getLessonForModule } from '../actions';
+import ReactMarkdown from 'react-markdown';
 
 const SingleLessonContent = ({ goalId, lessonId }: { goalId: string; lessonId: string }) => {
   const [lesson, setLesson] = useState<LessonType | null>(null);
@@ -29,7 +30,9 @@ const SingleLessonContent = ({ goalId, lessonId }: { goalId: string; lessonId: s
       {lesson ? (
         <div>
           <h3 className="text-xl font-semibold text-blue-300 mb-2">{lesson.title}</h3>
-          <p className="text-gray-300 mb-6">{lesson.content}</p>
+          <div className="prose prose-invert text-gray-300 mb-6">
+            <ReactMarkdown>{lesson.content}</ReactMarkdown>
+          </div>
           <button
             className="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold shadow hover:bg-blue-700 transition"
             onClick={openModal}
