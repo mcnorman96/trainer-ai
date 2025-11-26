@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Welcome to Trainer AI
 
-## Getting Started
+Trainer AI is your personal learning assistant. It helps you set goals, get custom learning paths, and actually enjoy the process. No jargon, no clutter—just smart, simple tools to help you learn.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## What’s This All About?
+Trainer AI uses AI to generate:
+- Personalized learning roadmaps
+- Modules and lessons
+- Quizzes and explanations
+All tailored to your goals. You set the destination, Trainer AI builds the journey.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## What Can It Do?
+- Set a goal and get a full learning path
+- AI-generated lessons, quizzes, and explanations
+- Track your progress as you complete modules and lessons
+- Take quizzes to test your knowledge
+- See everything in clean markdown
+- Switch to test mode for development (no API calls needed)
+- Handles errors gracefully so you always get something useful
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Tech Under the Hood
+- Next.js (React framework)
+- Tailwind CSS (styling)
+- TypeScript (type safety)
+- Prisma (ORM)
+- MySQL (database)
+- OpenAI API (AI content)
+- Docker (easy setup)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Getting Started (with Docker)
+1. Clone the repo:
+   ```sh
+   git clone https://github.com/yourusername/trainer-ai.git
+   cd trainer-ai
+   ```
+2. Copy the example env file:
+   ```sh
+   cp .env.example .env
+   # Add your OpenAI key and database info
+   ```
+3. Start everything up:
+   ```sh
+   docker-compose up --build
+   ```
+   This launches the app and MySQL together.
+4. Run database migrations:
+   ```sh
+   docker-compose exec app npx prisma migrate deploy
+   ```
+5. Open your browser:
+   Go to http://localhost:3000
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## For Developers
+- Uses pnpm (but npm/yarn work too)
+- AI logic: /lib/ai/
+- Test data: /test-data/ (set USE_TEST_DATA=true in .env)
+- Prompts: /lib/ai/prompts/
+- UI: /app/ and /components/
+- Database: /prisma/schema.prisma
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Troubleshooting
+- Check your OpenAI key and usage.
+- Database issues? Make sure MySQL is running and .env is correct.
+- Use test mode to skip OpenAI calls.
+
+---
