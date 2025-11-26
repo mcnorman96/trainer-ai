@@ -7,7 +7,6 @@ import { generate } from "../utils";
 import { prisma } from "../db";
 import type { Module, Lesson } from "@prisma/client";
 
-
 export async function generateGoalDescription(title: string) {
   return {
     title,
@@ -27,9 +26,6 @@ export async function generateGoalDescription(title: string) {
   return generate(openai, prompt, 300);
 }
 
-/* -----------------------------
- * Generate roadmap for goal
- * ----------------------------- */
 export async function generateRoadmap(goalTitle: string) {
   return {
     modules: [

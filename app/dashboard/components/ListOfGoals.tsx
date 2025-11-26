@@ -1,16 +1,17 @@
 'use client'
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import SingleGoal from './SingleGoal';
-import { apiFetch } from '../../../lib/apiFetch';
+import { getListOfGoals } from '../actions';
 
 const ListOfGoals = () => {
-  const [goals, setGoals] = React.useState<Array<{id: string, title: string, description: string}>>([])
+  const [goals, setGoals] = useState<Array<{id: string, title: string, description: string}>>([])
+  
   useEffect(() => {
     const fetchGoals = async () => {
       try {
-        const data = await apiFetch<{ listOfGoal: Array<{id: string, title: string, description: string}> }>('/api/goals');
-        setGoals(data.listOfGoal);
+        const listOfGoal = await getListOfGoals();
+        setGoals(listOfGoal || []);
       } catch (error) {
         console.error('Error fetching goals:', error);
       }

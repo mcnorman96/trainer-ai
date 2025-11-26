@@ -1,28 +1,34 @@
+import { LessonType, ModuleType } from '@/lib/types';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { apiFetch } from '@/lib/apiFetch';
 
-const SingleModule = ({ goalId, module }: any) => {
+const SingleModule = ({ goalId, module }: { goalId: string; module: ModuleType }) => {
   const [open, setOpen] = useState(false);
   const [moduleCompleted, setModuleCompleted] = useState(module.completed ?? false);
   const [lessonCompleted, setLessonCompleted] = useState<Record<string, boolean>>(() => {
     const initial: Record<string, boolean> = {};
-    module.lessons?.forEach((lesson: any) => {
+    module.lessons?.forEach((lesson: LessonType) => {
       initial[lesson.id] = lesson.completed ?? false;
     });
     return initial;
   });
 
-  // Refresh completion status from DB when module/lessons change
   useEffect(() => {
-    setModuleCompleted(module.completed ?? false);
-    setLessonCompleted(() => {
-      const initial: Record<string, boolean> = {};
-      module.lessons?.forEach((lesson: any) => {
-        initial[lesson.id] = lesson.completed ?? false;
+    const checkCompleteStatus = () => {
+      setModuleCompleted((prev) => {
+        const next = module.completed ?? false;
+        return prev !== next ? next : prev;
       });
-      return initial;
-    });
+
+      setLessonCompleted(() => {
+        const initial: Record<string, boolean> = {};
+        module.lessons?.forEach((lesson: LessonType) => {
+          initial[lesson.id] = lesson.completed ?? false;
+        });
+        return initial;
+      });
+    };
+    checkCompleteStatus();
   }, [module]);
 
   return (
@@ -49,13 +55,13 @@ const SingleModule = ({ goalId, module }: any) => {
       {open && (
         <div className="ml-4 mt-2">
           {module.lessons && module.lessons.length > 0 ? (
-            module.lessons.map((lesson: any) => (
+            module.lessons.map((lesson: LessonType) => (
               <div key={lesson.id} className="mb-2 p-2 border-b last:border-b-0 flex items-center justify-between">
                 <div>
                   <h4 className="text-lg font-medium">
                     <Link href={`/goals/${goalId}/lessons/${lesson.id}`} className="hover:underline text-blue-300">
                       {lesson.title}
-                      {lessonCompleted[lesson.id] && <span className="ml-2 px-2 py-1 text-xs bg-green-100 text-green-700 rounded">Done</span>}
+                      {lessonCompleted[lesson.id] && <span className="ml-2 px-2 py-1 text-xs bg-green-100 text-green-700 rounded">Completed</span>}
                     </Link>
                   </h4>
                   <p className="text-white">{lesson.content}</p>

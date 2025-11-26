@@ -1,37 +1,25 @@
 'use client';
 
-import { apiFetch } from "@/lib/apiFetch";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SingleModule from "./SingleModule";
+import { getModulesForGoal } from "../actions";
+import { ModuleType } from "@/lib/types";
 
-interface Module {
-  id: string;
-  title: string;
-  description?: string;
-}
-
-interface GoalDetailsProps {
-  goalId: string;
-}
-
-const GoalDetails: React.FC<GoalDetailsProps> = ({ goalId }) => {
-  const [modules, setModules] = React.useState<Module[]>([]);
-  const [error, setError] = React.useState<string | null>(null);
-
+const GoalDetails = ({ goalId }: { goalId: string }) => {
+  const [modules, setModules] = useState<ModuleType[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  
   useEffect(() => {
     const getGoalModules = async () => {
       try {
-        const data = await apiFetch<{ success: boolean; modules: Module[]; error?: string }>(`/api/modules?goalId=${goalId}`);
-        if (data.success) {
-          setModules(data.modules);
-        } else {
-          setError(data.error || "Failed to fetch modules");
-        }
+        const modules = await getModulesForGoal(goalId);
+        setModules(modules);
       } catch (err) {
         setError("Network error");
         console.error(err);
       }
     };
+    
     getGoalModules();
   }, [goalId]);
 

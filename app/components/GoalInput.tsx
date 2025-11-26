@@ -1,43 +1,39 @@
 "use client";
 import { useRef, useState } from "react";
-import { apiFetch } from "@/lib/apiFetch";
+import { createNewGoal } from "../actions";
 
 export default function GoalInput() {
   const goalInputRef = useRef<HTMLInputElement>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const [success, setSuccess] = useState<string>("");
   const [createdGoal, setCreatedGoal] = useState<string | null>(null);
 
   const createGoal = async () => {
     setLoading(true);
     setError("");
     setSuccess("");
+
     const title = goalInputRef.current?.value;
-
-    if (title) {
-      try {
-        const data = await apiFetch("/api/goals", {
-          method: "POST",
-          body: { title },
-        });
-        
-        if (data.success) {
-          setSuccess("Goal created!");
-          setCreatedGoal(data.fullLearningPath.goal.title);
-          if (goalInputRef.current) {
-            goalInputRef.current.value = "";
-          }
-        } else {
-          setError(data.error || "Failed to create goal");
-        }
-
-      } catch (err) {
-        setError("Network error");
-        console.log('err', err);
-      }
+    if (!title) {
+      setLoading(false);
+      setError("Please enter a goal title");
+      return;
     }
-    setLoading(false);
+
+    try {
+      const data = await createNewGoal(title);
+      setSuccess("Goal created!");
+      setCreatedGoal(data.fullLearningPath.goal.title);
+      if (goalInputRef.current) {
+        goalInputRef.current.value = "";
+      }
+    } catch (err) {
+      setError("Error creating goal");
+      console.log('err', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

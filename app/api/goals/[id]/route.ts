@@ -4,7 +4,7 @@ import { prisma } from "@/lib/db";
 export async function DELETE(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   const { id } = await context.params;
   if (!id) {
-    return NextResponse.json({ error: "Missing goal ID" }, { status: 400 });
+    return NextResponse.json({ success: false, data: null, error: "Missing goal ID" }, { status: 400 });
   }
 
   const roadmap = await prisma.roadmap.findUnique({ where: { goalId: id } });
@@ -22,5 +22,5 @@ export async function DELETE(request: NextRequest, context: { params: Promise<{ 
   }
 
   const deleteGoal = await prisma.goal.delete({ where: { id } });
-  return NextResponse.json({ success: true, deleteGoal });
+  return NextResponse.json({ success: true, data: { deleteGoal }, error: null });
 }

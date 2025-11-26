@@ -1,23 +1,25 @@
 import { useModal } from '@/app/components/ModalContext';
-import { apiFetch } from '@/lib/apiFetch'
 import { useEffect, useState } from 'react';
 import QuizForm from './QuizForm';
 import { useRouter } from 'next/navigation';
+import { QuizType } from '@/lib/types';
+import { getQuizForLesson } from '../actions';
 
 const QuizModal = ({ lessonId, moduleId, goalId }: { lessonId: string; moduleId: string; goalId: string }) => {
   const { isOpen, closeModal } = useModal();
-  const [quiz, setQuiz] = useState<Array<any>>(null);
+  const [quiz, setQuiz] = useState<QuizType | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
-        const data = await apiFetch(`/api/quiz?lessonId=${lessonId}`);
-        setQuiz(data.quiz);
+        const quiz = await getQuizForLesson(lessonId);
+        setQuiz(quiz);
       } catch (error) {
         console.error('Error fetching quiz:', error);
       }
     };
+    
     if (isOpen) {
       fetchQuiz();
     }

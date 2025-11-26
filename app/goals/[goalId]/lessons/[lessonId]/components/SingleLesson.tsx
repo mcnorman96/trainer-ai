@@ -1,27 +1,25 @@
 'use client'
 
-import { apiFetch } from '@/lib/apiFetch'
 import { useEffect, useState } from 'react'
 import { ModalProvider, useModal } from '@/app/components/ModalContext';
 import QuizModal from './QuizModal';
+import { LessonType } from '@/lib/types';
+import { getLessonForModule } from '../actions';
 
 const SingleLessonContent = ({ goalId, lessonId }: { goalId: string; lessonId: string }) => {
-  const [lesson, setLesson] = useState<{ id: string; title: string; content: string; order: number; moduleId?: string } | null>(null);
+  const [lesson, setLesson] = useState<LessonType | null>(null);
   const { openModal } = useModal();
 
-  const getLessonData = async (lessonId: string) => {
-    try {
-      const data = await apiFetch(`/api/lessons?lessonId=${lessonId}`);
-      
-      if (data.success) {
-        setLesson(data.lesson);
-      }
-    } catch (error) {
-      console.error('Error fetching lesson data:', error);
-    }
-  };
-
   useEffect(() => {
+    const getLessonData = async (lessonId: string) => {
+      try {
+        const lesson = await getLessonForModule(lessonId);
+        setLesson(lesson);
+      } catch (error) {
+        console.error('Error fetching lesson data:', error);
+      }
+    };
+
     getLessonData(lessonId);
   }, [lessonId]);
 
