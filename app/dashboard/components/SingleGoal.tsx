@@ -1,21 +1,23 @@
+"use client";
+
 import { GoalType } from '@/lib/types'
 import Link from 'next/link'
-import React from 'react'
+import { useRouter } from 'next/navigation';
 
 type SingleGoalProps = {
-  goal: GoalType,
-  setGoals: React.Dispatch<React.SetStateAction<Array<GoalType>>>
+  goal: GoalType
 }
 
-const SingleGoal = ({ goal, setGoals }: SingleGoalProps) => {
+const SingleGoal = ({ goal }: SingleGoalProps) => {
+  const router = useRouter();
   const deleteGoal = async (id: string) => {
     try {
       const response = await fetch(`/api/goals/${id}`, {
         method: 'DELETE',
       });
+
       if (response.ok) {
-        console.log('Goal deleted successfully');
-        setGoals(prevGoals => prevGoals.filter(g => g.id !== id));
+        router.refresh();
       } else {
         console.error('Failed to delete goal');
       }
