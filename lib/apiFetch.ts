@@ -1,4 +1,4 @@
-export async function apiFetch<T = any>(url: string, options?: {
+export async function apiFetch<T>(url: string, options?: {
   method?: string;
   body?: string | Record<string, string | number | boolean>;
   headers?: Record<string, string>;

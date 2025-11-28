@@ -68,3 +68,26 @@ export type CreateGoalResponse = ApiResponse<{
 export type GetGoalsResponse = ApiResponse<{
   listOfGoal: GoalType[];
 }>;
+
+export type ModuleData = {
+  title: string;
+  description: string;
+  lessons: LessonData[];
+}
+export type LessonData = {
+  title: string;
+  content: string;
+}
+export type RoadmapData = {
+  modules: ModuleData[];
+}
+export type GoalData = {
+  title: string;
+  description: string;
+}
+export type QuizData = {
+  questions: Array<{ question: string; options: string[]; answer: string }>;
+}
+export type ExplanationData = {
+  explanation: string;
+}
