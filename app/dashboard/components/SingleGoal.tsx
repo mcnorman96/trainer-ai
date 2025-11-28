@@ -29,26 +29,28 @@ const SingleGoal = ({ goal }: SingleGoalProps) => {
   return (
     <>
       { goal && (
-        <div className="bg-gray-900 rounded-lg shadow p-6 border border-gray-800 hover:bg-gray-950 transition-colors">
+        <div className="bg-gray-900 rounded-lg shadow p-4 sm:p-6 border border-gray-800 hover:bg-gray-950 transition-colors">
           <Link href={`/goals/${goal.id}`} className="block">
-            <h4 className="text-2xl font-bold capitalize text-blue-300 mb-2">{goal.title}</h4>
-            <p className="text-gray-300 mb-4">{goal.description}</p>
+            <h4 className="text-lg sm:text-2xl font-bold capitalize text-blue-300 mb-1 sm:mb-2">{goal.title}</h4>
+            <p className="text-gray-300 mb-2 sm:mb-4">{goal.description}</p>
           </Link>
-          <Link
-            href={`/goals/${goal.id}`}
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-blue-700 transition mr-5"
-          >
-            View goal
-          </Link>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              deleteGoal(goal.id);
-            }}
-            className="bg-red-600 text-white px-4 py-2 rounded-lg font-semibold shadow hover:bg-red-700 transition"
-          >
-            Delete goal
-          </button>
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mt-2">
+            <Link
+              href={`/goals/${goal.id}`}
+              className="bg-blue-600 text-center text-white px-3 sm:px-4 py-2 rounded-lg font-semibold shadow hover:bg-blue-700 transition"
+            >
+              View goal
+            </Link>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                deleteGoal(goal.id);
+              }}
+              className="bg-red-600 text-center text-white px-3 sm:px-4 py-2 rounded-lg font-semibold shadow hover:bg-red-700 transition"
+            >
+              Delete goal
+            </button>
+          </div>
         </div>
       )}
     </>

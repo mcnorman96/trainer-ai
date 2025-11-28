@@ -4,7 +4,7 @@ const lessonIdPage = async({ params }: { params: { goalId: string, lessonId: str
   const { goalId, lessonId } = await params;
   
   return (
-    <div className="flex flex-col min-h-screen p-5">
+    <div className="flex flex-col min-h-screen p-2 sm:p-5">
       <SingleLesson goalId={goalId} lessonId={lessonId} />
     </div>
   )

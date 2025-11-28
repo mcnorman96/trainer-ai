@@ -34,17 +34,17 @@ export default function GoalInput() {
   };
 
   return (
-    <div className="max-w-xl mx-auto bg-gray-900 rounded-xl shadow-lg p-8 mt-5 border border-gray-800">
-      <h2 className="text-2xl font-bold mb-6 text-white">Create a New Training Goal</h2>
-      <div className="flex gap-4 mb-6">
+    <div className="w-full max-w-xl mx-auto bg-gray-900 rounded-xl shadow-lg p-4 sm:p-8 mt-4 sm:mt-5 border border-gray-800">
+      <h2 className="text-lg sm:text-2xl font-bold mb-4 sm:mb-6 text-white">Create a New Training Goal</h2>
+      <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mb-4 sm:mb-6">
         <input
-          className="flex-1 px-4 py-2 rounded-lg border border-gray-700 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="flex-1 px-2 sm:px-4 py-2 rounded-lg border border-gray-700 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
           ref={goalInputRef}
           type="text"
           placeholder="Enter your training goal"
         />
         <button
-          className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold shadow hover:bg-blue-700 transition disabled:opacity-50"
+          className="bg-blue-600 text-white px-4 sm:px-6 py-2 rounded-lg font-semibold shadow hover:bg-blue-700 transition disabled:opacity-50"
           onClick={createGoal}
           disabled={loading}
         >
@@ -52,7 +52,7 @@ export default function GoalInput() {
         </button>
       </div>
       {error && <p className="text-red-400 font-medium mb-2">{error}</p>}
-      {createdGoal && <p className="text-gray-300 mt-4">Goal created: <span className="font-semibold">{createdGoal}</span></p>}
+      {createdGoal && <p className="text-gray-300 mt-2 sm:mt-4">Goal created: <span className="font-semibold">{createdGoal}</span></p>}
     </div>
   );
 }

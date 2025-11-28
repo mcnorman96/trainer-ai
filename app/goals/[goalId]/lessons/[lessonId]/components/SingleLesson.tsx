@@ -25,16 +25,16 @@ const SingleLessonContent = ({ goalId, lessonId }: { goalId: string; lessonId: s
   }, [lessonId]);
 
   return (
-    <div className="w-full bg-gray-900 rounded-xl shadow-lg p-6 mt-10 border border-gray-800">
-      <h2 className="text-2xl font-bold mb-6 text-white">Lesson Details</h2>
+    <div className="w-full bg-gray-900 rounded-xl shadow-lg p-4 sm:p-6 mt-6 sm:mt-10 border border-gray-800">
+      <h2 className="text-lg sm:text-2xl font-bold mb-4 sm:mb-6 text-white">Lesson Details</h2>
       {lesson ? (
         <div>
-          <h3 className="text-xl font-semibold text-blue-300 mb-2">{lesson.title}</h3>
-          <div className="prose prose-invert text-gray-300 mb-6">
+          <h3 className="text-base sm:text-xl font-semibold text-blue-300 mb-1 sm:mb-2">{lesson.title}</h3>
+          <div className="prose prose-invert text-gray-300 mb-2 sm:mb-6 overflow-auto">
             <ReactMarkdown>{lesson.content}</ReactMarkdown>
           </div>
           <button
-            className="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold shadow hover:bg-blue-700 transition"
+            className="px-4 sm:px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold shadow hover:bg-blue-700 transition"
             onClick={openModal}
           >
             Take Quiz

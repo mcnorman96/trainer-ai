@@ -39,13 +39,13 @@ const QuizForm: React.FC<QuizFormProps> = ({ quiz, onClose, lessonId, moduleId, 
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
       {quiz.questions.map((quizQuestion, id) => (
-        <div key={id} className="mb-4 p-4 bg-gray-800 rounded-lg border border-gray-700">
-          <div className="font-semibold mb-2 text-white">
+        <div key={id} className="mb-2 sm:mb-4 p-2 sm:p-4 bg-gray-800 rounded-lg border border-gray-700">
+          <div className="font-semibold mb-1 sm:mb-2 text-white">
             <ReactMarkdown>{quizQuestion.question}</ReactMarkdown>
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1 sm:gap-2">
             {quizQuestion.options.map((opt, i) => (
               <label key={i} className="flex items-center gap-2 cursor-pointer">
                 <input
@@ -55,7 +55,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ quiz, onClose, lessonId, moduleId, 
                   disabled={submitted}
                   className="form-checkbox h-5 w-5 text-blue-500 focus:ring-2 focus:ring-blue-400"
                 />
-                <span className="text-gray-200">{opt}</span>
+                <span className="text-gray-200 text-sm sm:text-base">{opt}</span>
               </label>
             ))}
           </div>
