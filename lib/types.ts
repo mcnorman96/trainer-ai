@@ -91,3 +91,9 @@ export type QuizData = {
 export type ExplanationData = {
   explanation: string;
 }
+
+export type PageLayoutProps = {
+  title: string;
+  children: React.ReactNode;
+  className?: string;
+}

@@ -25,12 +25,10 @@ const SingleLessonContent = ({ goalId, lessonId }: { goalId: string; lessonId: s
   }, [lessonId]);
 
   return (
-    <div className="w-full bg-gray-900 rounded-xl shadow-lg p-4 sm:p-6 mt-6 sm:mt-10 border border-gray-800">
-      <h2 className="text-lg sm:text-2xl font-bold mb-4 sm:mb-6 text-white">Lesson Details</h2>
+    <>
       {lesson ? (
         <div>
-          <h3 className="text-base sm:text-xl font-semibold text-blue-300 mb-1 sm:mb-2">{lesson.title}</h3>
-          <div className="prose prose-invert text-gray-300 mb-2 sm:mb-6 overflow-auto">
+        <div className="prose prose-invert text-gray-300 mb-2 sm:mb-6 overflow-auto">
             <ReactMarkdown>{lesson.content}</ReactMarkdown>
           </div>
           <button
@@ -44,7 +42,7 @@ const SingleLessonContent = ({ goalId, lessonId }: { goalId: string; lessonId: s
       ) : (
         <p className="text-gray-400">Loading lesson...</p>
       )}
-    </div>
+    </>
   );
 };
 

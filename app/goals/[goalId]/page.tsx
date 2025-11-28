@@ -1,10 +1,11 @@
 import GoalDetails from "./components/GoalDetails";
+import PageLayout from "@/app/components/PageLayout";
 
 export default async function GoalDetailPage({ params }: { params: { goalId: string } }) {
   const { goalId } = await params;
   return (
-    <div className="flex flex-col min-h-screen p-2 sm:p-5">
+    <PageLayout title="Learning Path for Goal">
       <GoalDetails goalId={goalId} />
-    </div>
+    </PageLayout>
   )
 }

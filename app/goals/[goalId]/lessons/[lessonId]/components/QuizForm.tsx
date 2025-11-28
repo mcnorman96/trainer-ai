@@ -47,7 +47,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ quiz, onClose, lessonId, moduleId, 
           </div>
           <div className="flex flex-col gap-1 sm:gap-2">
             {quizQuestion.options.map((opt, i) => (
-              <label key={i} className="flex items-center gap-2 cursor-pointer">
+              <label key={i} className="flex items-center gap-2 cursor-pointer mb-0">
                 <input
                   type="checkbox"
                   checked={selected[id] === opt}
@@ -55,7 +55,7 @@ const QuizForm: React.FC<QuizFormProps> = ({ quiz, onClose, lessonId, moduleId, 
                   disabled={submitted}
                   className="form-checkbox h-5 w-5 text-blue-500 focus:ring-2 focus:ring-blue-400"
                 />
-                <span className="text-gray-200 text-sm sm:text-base">{opt}</span>
+                <span className="text-gray-200 text-sm sm:text-base mb-0">{opt}</span>
               </label>
             ))}
           </div>

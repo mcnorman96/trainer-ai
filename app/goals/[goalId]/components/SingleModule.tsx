@@ -62,7 +62,7 @@ const SingleModule = ({ goalId, module }: { goalId: string; module: ModuleType }
                     <h4 className="text-sm sm:text-lg font-semibold text-blue-300">
                       <Link href={`/goals/${goalId}/lessons/${lesson.id}`} className="hover:underline">
                         {lesson.title}
-                        {lessonCompleted[lesson.id] && <span className="ml-2 px-2 py-1 text-xxs bg-green-400 text-white rounded">Done</span>}
+                        {lessonCompleted[lesson.id] && <span className="ml-2 px-2 py-1 text-[0.6em] bg-green-400 text-white rounded">Done</span>}
                       </Link>
                     </h4>
                     <p className="text-gray-400 text-sm sm:text-base">{lesson.shortContent}</p>

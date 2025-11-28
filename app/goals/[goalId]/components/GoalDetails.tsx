@@ -24,8 +24,7 @@ const GoalDetails = ({ goalId }: { goalId: string }) => {
   }, [goalId]);
 
   return (
-    <div className="w-full bg-gray-900 rounded-xl shadow-lg p-6 mt-10 border border-gray-800">
-      <h2 className="text-2xl font-bold mb-6 text-white">Learning Path for Goal</h2>
+    <>
       {error && <div className="text-red-400 font-medium mb-4">{error}</div>}
       {modules.length > 0 ? (
         <div className="space-y-6">
@@ -36,7 +35,7 @@ const GoalDetails = ({ goalId }: { goalId: string }) => {
       ) : (
         <div className="text-gray-400">No modules available for this goal.</div>
       )}
-    </div>
+    </>
   );
 };
 
